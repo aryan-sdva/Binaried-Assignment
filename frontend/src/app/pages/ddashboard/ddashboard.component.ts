@@ -7,6 +7,7 @@ import { FormsModule,
  } from '@angular/forms';
 import {Router} from '@angular/router';
 import { TaskService } from '../../services/task.service';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ddashboard',
@@ -14,7 +15,8 @@ import { TaskService } from '../../services/task.service';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   templateUrl: './ddashboard.component.html',
   styleUrls: ['./ddashboard.component.scss']
@@ -24,6 +26,7 @@ export class DdashboardComponent implements OnInit {
   private taskService = inject(TaskService);
   private fb= inject(FormBuilder);
   private router= inject(Router);
+  private snackBar= inject(MatSnackBar);
 
   tasks: any[] = [];
 
@@ -134,13 +137,31 @@ createTask() {
 
         this.editingTaskId = null;
 
+        this.snackBar.open(
+          'Task updated successfully!',
+          'Close',
+          {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          }
+        );
+
       },
 
       error: (err) => {
 
         console.error(err);
 
-        alert('Unable to update task.');
+        this.snackBar.open(
+          'Unable to update task.',
+          'Close',
+          {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          }
+        );
 
       }
 
@@ -159,13 +180,31 @@ createTask() {
           priority: 'Medium'
         });
 
+        this.snackBar.open(
+          'Task created successfully!',
+          'Close',
+          {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          }
+        );
+
       },
 
       error: (err) => {
 
         console.error(err);
 
-        alert('Unable to create task.');
+        this.snackBar.open(
+          'Unable to create task.',
+          'Close',
+          {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          }
+        );
 
       }
 
@@ -174,7 +213,6 @@ createTask() {
   }
 
 }
-
 deleteTask(id: string) {
 
   if (!confirm('Delete this task?')) {
@@ -187,13 +225,31 @@ deleteTask(id: string) {
 
       this.loadTasks();
 
+      this.snackBar.open(
+        'Task deleted successfully!',
+        'Close',
+        {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        }
+      );
+
     },
 
-    error: (err: any) => {
+    error: (err) => {
 
       console.error(err);
 
-      alert('Unable to delete task.');
+      this.snackBar.open(
+        'Unable to delete task.',
+        'Close',
+        {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        }
+      );
 
     }
 
@@ -237,5 +293,6 @@ logout() {
   this.router.navigate(['/login']);
 
 }
+
 
 }
