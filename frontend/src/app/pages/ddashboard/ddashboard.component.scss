@@ -1,0 +1,156 @@
+:host {
+  display: block;
+  min-height: 100vh;
+
+  background:
+    radial-gradient(circle at top left, #6b8cff 0%, transparent 45%),
+    radial-gradient(circle at bottom right, #1323b6 0%, transparent 40%),
+    linear-gradient(135deg, #f5f8ff 0%, #dfe8ff 100%);
+
+  background-attachment: fixed;
+}
+.container {
+  max-width: 1200px;
+}
+
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header h2 {
+  color: #1323b6;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.dashboard-header p {
+  color: #4f5b77;
+    font-size: 1rem;
+}
+
+
+.stats-card{
+
+    transition:.3s;
+    cursor:pointer;
+
+}
+
+.stats-card:hover{
+
+    transform:translateY(-6px) scale(1.02);
+
+}
+
+.stats-card h6 {
+  color: #6c757d;
+  font-weight: 600;
+}
+
+.stats-card h3 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.card {
+  background: rgba(255,255,255,0.90);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255,255,255,.45);
+
+  border-radius: 18px;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+
+.task-card{
+
+    transition:.3s;
+
+}
+
+.task-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.card-title {
+  font-weight: 700;
+}
+
+.card-text {
+  color: #6c757d;
+}
+
+
+
+.form-control,
+.form-select {
+  border-radius: 10px;
+  min-height: 45px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 .2rem rgba(13,110,253,.2);
+}
+
+
+.btn {
+  border-radius: 12px;
+  transition: .25s;
+  font-weight: 600;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+
+
+.badge {
+  padding: 8px 12px;
+  font-size: .85rem;
+  border-radius: 20px;
+}
+
+
+
+@media (max-width:768px){
+
+.dashboard-header{
+
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+
+}
+
+.dashboard-header button{
+
+    width:100%;
+
+}
+
+}
+.stats-total{
+    border-left:6px solid #0d6efd;
+}
+
+.stats-pending{
+    border-left:6px solid #ffc107;
+}
+
+.stats-completed{
+    border-left:6px solid #198754;
+}
+
+.stats-priority{
+    border-left:6px solid #dc3545;
+}

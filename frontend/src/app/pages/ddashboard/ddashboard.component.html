@@ -1,98 +1,71 @@
-<div class="container mt-4">
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
-    <h2 class="mb-0">
-
-        Task Dashboard
-
-    </h2>
-
-    <button
-        class="btn btn-outline-danger"
-        (click)="logout()">
-
-        Logout
-
-    </button>
-
-</div>
+<div class="container py-4">
 
 
-    <div class="row mb-4">
+    <div class="dashboard-header mb-5">
+
+        <div>
+            <h2 class="fw-bold mb-1">TaskFlow Dashboard</h2>
+            <p class="text-muted mb-0">
+                Organize, track and manage your daily tasks.
+            </p>
+        </div>
+
+        <button
+            class="btn btn-outline-danger px-4"
+            (click)="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+    <div class="row g-3 mb-4">
 
         <div class="col-md-3">
-
-            <div class="card text-center">
-
+            <div class="card stats-card stats-total text-center h-100">
                 <div class="card-body">
-
                     <h6>Total Tasks</h6>
-
                     <h3>{{ totalTasks }}</h3>
-
                 </div>
-
             </div>
-
         </div>
 
         <div class="col-md-3">
-
-            <div class="card text-center">
-
+            <div class="card stats-card stats-pending text-center h-100">
                 <div class="card-body">
-
                     <h6>Pending</h6>
-
                     <h3>{{ pendingTasks }}</h3>
-
                 </div>
-
             </div>
-
         </div>
 
         <div class="col-md-3">
-
-            <div class="card text-center">
-
+            <div class="card stats-card stats-completed text-center h-100">
                 <div class="card-body">
-
                     <h6>Completed</h6>
-
                     <h3>{{ completedTasks }}</h3>
-
                 </div>
-
             </div>
-
         </div>
 
         <div class="col-md-3">
-
-            <div class="card text-center">
-
+            <div class="card stats-card stats-priority text-center h-100">
                 <div class="card-body">
-
                     <h6>High Priority</h6>
-
                     <h3>{{ highPriorityTasks }}</h3>
-
                 </div>
-
             </div>
-
         </div>
 
     </div>
 
-    <div class="card mb-4">
+    <div class="card shadow-sm mb-4">
 
         <div class="card-body">
 
             <h4 class="mb-3">
-                Add New Task
+                {{ editingTaskId ? 'Update Task' : 'Add New Task' }}
             </h4>
 
             <form
@@ -119,7 +92,7 @@
 
                 </div>
 
-                <div class="row">
+                <div class="row g-3">
 
                     <div class="col-md-6">
 
@@ -127,13 +100,8 @@
                             class="form-select"
                             formControlName="status">
 
-                            <option value="Pending">
-                                Pending
-                            </option>
-
-                            <option value="Completed">
-                                Completed
-                            </option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
 
                         </select>
 
@@ -145,17 +113,9 @@
                             class="form-select"
                             formControlName="priority">
 
-                            <option value="Low">
-                                Low
-                            </option>
-
-                            <option value="Medium">
-                                Medium
-                            </option>
-
-                            <option value="High">
-                                High
-                            </option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
 
                         </select>
 
@@ -163,22 +123,27 @@
 
                 </div>
 
-                <button
-                    class="btn btn-success mt-3"
-                    type="submit">
+                <div class="mt-4">
 
-                    {{ editingTaskId ? 'Update Task' : 'Add Task' }}
+                    <button
+                        class="btn btn-success"
+                        type="submit">
 
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-secondary ms-2"
-                    *ngIf="editingTaskId"
-                    (click)="cancelEdit()">
+                        {{ editingTaskId ? 'Update Task' : 'Add Task' }}
 
-                    Cancel
-                </button>
-                
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary ms-2"
+                        *ngIf="editingTaskId"
+                        (click)="cancelEdit()">
+
+                        Cancel
+
+                    </button>
+
+                </div>
 
             </form>
 
@@ -186,77 +151,80 @@
 
     </div>
 
+
     <input
         class="form-control mb-4"
-        placeholder="Search Tasks..."
+        placeholder="🔍 Search Tasks..."
         [(ngModel)]="searchText"
         (input)="searchTasks()">
 
-
     <div
-        class="card mb-3"
+        class="card task-card mb-3"
         *ngFor="let task of filteredTasks">
 
         <div class="card-body">
 
-    <div class="d-flex justify-content-between align-items-start">
+            <div class="d-flex justify-content-between align-items-start">
 
-        <div>
+                <div>
 
-            <h5>{{ task.title }}</h5>
+                    <h5 class="card-title mb-2">
+                        {{ task.title }}
+                    </h5>
 
-            <p class="mb-2">
-                {{ task.description }}
-            </p>
+                    <p class="card-text mb-3">
+                        {{ task.description }}
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <button
+                        class="btn btn-warning btn-sm me-2"
+                        (click)="editTask(task)">
+
+                        Edit
+
+                    </button>
+
+                    <button
+                        class="btn btn-danger btn-sm"
+                        (click)="deleteTask(task._id)">
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <span class="badge bg-primary">
+                    {{ task.status }}
+                </span>
+
+                <span class="badge bg-danger ms-2">
+                    {{ task.priority }}
+                </span>
+
+            </div>
 
         </div>
 
-        <div>
-
-            <button
-                class="btn btn-sm btn-warning me-2"
-                (click)="editTask(task)">
-
-                Edit
-
-            </button>
-
-            <button
-                class="btn btn-sm btn-danger"
-                (click)="deleteTask(task._id)">
-
-                Delete
-
-            </button>
-
-        </div>
-
     </div>
-
-    <div class="mt-2">
-
-        <span class="badge bg-primary">
-            {{ task.status }}
-        </span>
-
-        <span class="badge bg-danger ms-2">
-            {{ task.priority }}
-        </span>
-
-    </div>
-
-</div>
-
-    </div>
-
 
     <div
-        class="text-center mt-5"
+        class="text-center py-5"
         *ngIf="filteredTasks.length === 0">
 
-        <h4>
-            No Tasks Found
-        </h4>
+        <h4>No Tasks Found</h4>
+
+        <p class="text-muted">
+            Create your first task to get started.
+        </p>
 
     </div>
 
