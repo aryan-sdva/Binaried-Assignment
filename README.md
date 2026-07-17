@@ -159,15 +159,21 @@ http://localhost:4200
 
 # 📷 Application Screenshots
 
-*(Add screenshots here if desired.)*
+## Login
+![Login](screenshots/login.png)
 
-Example:
+## Register
+![Register](screenshots/register.png)
 
-- Login Page
-- Register Page
-- Dashboard
-- Task CRUD
-- Search Functionality
+## Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+## Create/Update Task
+![Create Task](screenshots/updatetask.png)
+
+## Search
+![Search](screenshots/searchtask.png)
+
 
 ---
 
@@ -242,25 +248,6 @@ Given more time, I would add:
 - Unit and integration tests
 - Docker support
 - Deployment using Render and Vercel
-
----
-
-# 📷 Application Screenshots
-
-## Login
-![Login](screenshots/login.png)
-
-## Register
-![Register](screenshots/register.png)
-
-## Dashboard
-![Dashboard](screenshots/dashboard.png)
-
-## Create/Update Task
-![Create Task](screenshots/updatetask.png)
-
-## Search
-![Search](screenshots/searchtask.png)
 
 ---
 
