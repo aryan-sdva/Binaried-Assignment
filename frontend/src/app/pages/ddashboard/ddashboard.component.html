@@ -206,7 +206,11 @@
                     {{ task.status }}
                 </span>
 
-                <span class="badge bg-danger ms-2">
+                <span class="badge bg-danger ms-2" [ngClass]="{
+                    'bg-danger':task.priority === 'High',
+                    'bg-warning':task.priority === 'Medium',
+                    'bg-success':task.priority === 'Low'
+                }">
                     {{ task.priority }}
                 </span>
 
