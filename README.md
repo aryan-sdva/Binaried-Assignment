@@ -176,6 +176,7 @@ Example:
 The following AI tools were used during development:
 
 - ChatGPT
+- Claude
 
 ---
 
