@@ -244,6 +244,25 @@ Given more time, I would add:
 
 ---
 
+# 📷 Application Screenshots
+
+## Login
+![Login](screenshots/login.png)
+
+## Register
+![Register](screenshots/register.png)
+
+## Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+## Create/Update Task
+![Create Task](screenshots/updatetask.png)
+
+## Search
+![Search](screenshots/searchtask.png)
+
+---
+
 # 📄 License
 
 This project was developed as part of an internship assignment for educational and evaluation purposes.
