@@ -9,7 +9,7 @@ export class TaskService {
 
   private http = inject(HttpClient);
 
-  private api = 'http://localhost:5001/api/tasks';
+  private api = 'https://taskflow-backend-btft.onrender.com/api/tasks';
 
   getTasks(): Observable<any> {
     return this.http.get(this.api);

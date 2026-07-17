@@ -9,7 +9,7 @@ export class AuthService {
 
   private http = inject(HttpClient);
 
-  private api = 'http://localhost:5001/api/auth';
+  private api = 'https://taskflow-backend-btft.onrender.com/api/auth';
 
   register(data:any): Observable<any> {
     return this.http.post(`${this.api}/register`, data);
