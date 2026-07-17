@@ -38,6 +38,7 @@ export class DdashboardComponent implements OnInit {
   completedTasks = 0;
 
   highPriorityTasks = 0;
+  editingTaskId: string | null = null;
 
   taskForm=this.fb.group({
     title: ['', Validators.required],
@@ -110,37 +111,67 @@ export class DdashboardComponent implements OnInit {
 
   }
 
-  createTask() {
+createTask() {
 
   if (this.taskForm.invalid) {
     return;
   }
 
-  this.taskService.createTask(this.taskForm.value).subscribe({
+  const taskData = this.taskForm.value;
 
-    next: () => {
+  if (this.editingTaskId) {
 
-      this.taskForm.reset({
+    this.taskService.updateTask(this.editingTaskId, taskData).subscribe({
 
-        status: 'Pending',
+      next: () => {
 
-        priority: 'Medium'
+        this.loadTasks();
 
-      });
+        this.taskForm.reset({
+          status: 'Pending',
+          priority: 'Medium'
+        });
 
-      this.loadTasks();
+        this.editingTaskId = null;
 
-    },
+      },
 
-    error: (err: any) => {
+      error: (err) => {
 
-      console.error(err);
+        console.error(err);
 
-      alert('Unable to create task.');
+        alert('Unable to update task.');
 
-    }
+      }
 
-  });
+    });
+
+  } else {
+
+    this.taskService.createTask(taskData).subscribe({
+
+      next: () => {
+
+        this.loadTasks();
+
+        this.taskForm.reset({
+          status: 'Pending',
+          priority: 'Medium'
+        });
+
+      },
+
+      error: (err) => {
+
+        console.error(err);
+
+        alert('Unable to create task.');
+
+      }
+
+    });
+
+  }
 
 }
 
@@ -172,11 +203,34 @@ deleteTask(id: string) {
 
 editTask(task: any) {
 
-  console.log(task);
+  this.editingTaskId = task._id;
 
-  alert('Edit dialog coming next.');
+  this.taskForm.patchValue({
+    title: task.title,
+    description: task.description,
+    status: task.status,
+    priority: task.priority
+  });
 
-}logout() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+}
+cancelEdit() {
+
+  this.editingTaskId = null;
+
+  this.taskForm.reset({
+
+    status: 'Pending',
+    priority: 'Medium'
+
+  });
+
+}
+logout() {
 
   localStorage.removeItem('token');
 

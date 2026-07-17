@@ -167,9 +167,18 @@
                     class="btn btn-success mt-3"
                     type="submit">
 
-                    Add Task
+                    {{ editingTaskId ? 'Update Task' : 'Add Task' }}
 
                 </button>
+                <button
+                    type="button"
+                    class="btn btn-secondary ms-2"
+                    *ngIf="editingTaskId"
+                    (click)="cancelEdit()">
+
+                    Cancel
+                </button>
+                
 
             </form>
 
