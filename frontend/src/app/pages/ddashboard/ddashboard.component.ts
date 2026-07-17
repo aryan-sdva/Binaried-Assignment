@@ -1,11 +1,187 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  Validators
+ } from '@angular/forms';
+import {Router} from '@angular/router';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-ddashboard',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './ddashboard.component.html',
-  styleUrl: './ddashboard.component.scss'
+  styleUrls: ['./ddashboard.component.scss']
 })
-export class DdashboardComponent {
+export class DdashboardComponent implements OnInit {
+
+  private taskService = inject(TaskService);
+  private fb= inject(FormBuilder);
+  private router= inject(Router);
+
+  tasks: any[] = [];
+
+  filteredTasks: any[] = [];
+
+  searchText = '';
+
+  totalTasks = 0;
+
+  pendingTasks = 0;
+
+  completedTasks = 0;
+
+  highPriorityTasks = 0;
+
+  taskForm=this.fb.group({
+    title: ['', Validators.required],
+    description: [''],
+    status: ['Pending'],
+    priority: ['Medium']
+  });
+
+  ngOnInit(): void {
+    this.loadTasks();
+  }
+
+  loadTasks() {
+
+    this.taskService.getTasks().subscribe({
+
+      next: (tasks: any) => {
+
+        this.tasks = tasks;
+
+        this.filteredTasks = tasks;
+
+        this.calculateStatistics();
+
+      },
+
+      error: (err) => {
+
+        console.log(err);
+
+      }
+
+    });
+
+  }
+
+  calculateStatistics() {
+
+    this.totalTasks = this.tasks.length;
+
+    this.pendingTasks =
+      this.tasks.filter(
+        task => task.status === 'Pending'
+      ).length;
+
+    this.completedTasks =
+      this.tasks.filter(
+        task => task.status === 'Completed'
+      ).length;
+
+    this.highPriorityTasks =
+      this.tasks.filter(
+        task => task.priority === 'High'
+      ).length;
+
+  }
+
+  searchTasks() {
+
+    this.filteredTasks =
+      this.tasks.filter(task =>
+
+        task.title
+          .toLowerCase()
+          .includes(
+            this.searchText.toLowerCase()
+          )
+
+      );
+
+  }
+
+  createTask() {
+
+  if (this.taskForm.invalid) {
+    return;
+  }
+
+  this.taskService.createTask(this.taskForm.value).subscribe({
+
+    next: () => {
+
+      this.taskForm.reset({
+
+        status: 'Pending',
+
+        priority: 'Medium'
+
+      });
+
+      this.loadTasks();
+
+    },
+
+    error: (err: any) => {
+
+      console.error(err);
+
+      alert('Unable to create task.');
+
+    }
+
+  });
+
+}
+
+deleteTask(id: string) {
+
+  if (!confirm('Delete this task?')) {
+    return;
+  }
+
+  this.taskService.deleteTask(id).subscribe({
+
+    next: () => {
+
+      this.loadTasks();
+
+    },
+
+    error: (err: any) => {
+
+      console.error(err);
+
+      alert('Unable to delete task.');
+
+    }
+
+  });
+
+}
+
+editTask(task: any) {
+
+  console.log(task);
+
+  alert('Edit dialog coming next.');
+
+}logout() {
+
+  localStorage.removeItem('token');
+
+  this.router.navigate(['/login']);
+
+}
 
 }

@@ -1,1 +1,41 @@
-<h1>Login Page</h1>
+<div class="container mt-5" style="max-width:400px;">
+
+  <h2 class="mb-4 text-center">
+    Login
+  </h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+    <div class="mb-3">
+
+      <label>Email</label>
+
+      <input
+        class="form-control"
+        type="email"
+        formControlName="email">
+
+    </div>
+
+    <div class="mb-3">
+
+      <label>Password</label>
+
+      <input
+        class="form-control"
+        type="password"
+        formControlName="password">
+
+    </div>
+
+    <button
+      class="btn btn-primary w-100"
+      type="submit">
+
+      Login
+
+    </button>
+
+  </form>
+
+</div>

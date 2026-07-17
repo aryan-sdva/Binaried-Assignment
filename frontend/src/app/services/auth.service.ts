@@ -1,34 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private apiUrl= 'http://localhost:5001/api/auth';
-  constructor(private http: HttpClient) { }
-  register(userData:any): Observable <any>{
-    return this.http.post('${this.apiUrl}/register', userData);
+  private http = inject(HttpClient);
+
+  private api = 'http://localhost:5001/api/auth';
+
+  register(data:any): Observable<any> {
+    return this.http.post(`${this.api}/register`, data);
   }
 
-  saveToken(token: string){
-    localStorage.setItem('token', token);
-  }
-
-  getToken() {
-    return localStorage.getItem('token');
-  }
-
-  logout(){
-    localStorage.removeItem('token');
-  }
-
-  isLoggedIn(){
-    return !!localStorage.getItem('token');
+  login(data:any): Observable<any> {
+    return this.http.post(`${this.api}/login`, data);
   }
 
   getProfile(): Observable<any> {
-    return this.http.get('${this.apiUrl}/profile');
+    return this.http.get(`${this.api}/profile`);
   }
+
 }

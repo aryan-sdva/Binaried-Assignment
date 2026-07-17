@@ -1,1 +1,53 @@
-<h1>Register Page</h1>
+<div class="container mt-5" style="max-width:400px;">
+
+    <h2 class="text-center mb-4">
+        Register
+    </h2>
+
+    <form
+        [formGroup]="registerForm"
+        (ngSubmit)="register()">
+
+        <div class="mb-3">
+
+            <label>Name</label>
+
+            <input
+                class="form-control"
+                formControlName="name">
+
+        </div>
+
+        <div class="mb-3">
+
+            <label>Email</label>
+
+            <input
+                class="form-control"
+                type="email"
+                formControlName="email">
+
+        </div>
+
+        <div class="mb-3">
+
+            <label>Password</label>
+
+            <input
+                class="form-control"
+                type="password"
+                formControlName="password">
+
+        </div>
+
+        <button
+            class="btn btn-success w-100"
+            type="submit">
+
+            Register
+
+        </button>
+
+    </form>
+
+</div>
